@@ -14,39 +14,64 @@ class House:
         return self.number_of_floors  # количество этажей
 
     def __str__(self):
-        return f"Название: {self.name}, количество этажей: {self.number_of_floors}"  # информация о доме
+        return f"Название: {self.name}, Количество этажей: {self.number_of_floors}"  # информация о доме
 
     def assay_other(self, other):
-        return isinstance(other, House) # относится ли other к классу House
+        return isinstance(other, House)  # относится ли other к классу House
 
-    def __eq__(self, other):
-        return self.number_of_floors == other.number_of_floors if self.assay_other(other) else False
+    def eq(self, other):
+        if isinstance(other, House):
+            return self.number_of_floors == other.number_of_floors
+        elif isinstance(other, (int, float)):
+            return self.number_of_floors == other
+        return "Ошибка сравнения"
 
-    def __lt__(self, other):
-        return self.number_of_floors < other.number_of_floors if self.assay_other(other) else 'Ошибка'
+    def lt(self, other):
+        if isinstance(other, House):
+            return self.number_of_floors < other.number_of_floors
+        elif isinstance(other, (int, float)):
+            return self.number_of_floors < other
+        return "Ошибка"
 
-    def __le__(self, other):
-        return self.number_of_floors <= other.number_of_floors if self.assay_other(other) else 'Ошибка'
+    def le(self, other):
+        if isinstance(other, House):
+            return self.number_of_floors <= other.number_of_floors
+        elif isinstance(other, (int, float)):
+            return self.number_of_floors <= other
+        return "Ошибка"
 
-    def __gt__(self, other):
-        return self.number_of_floors > other.number_of_floors if self.assay_other(other) else 'Ошибка'
+    def gt(self, other):
+        if isinstance(other, House):
+            return self.number_of_floors > other.number_of_floors
+        elif isinstance(other, (int, float)):
+            return self.number_of_floors > other
+        return "Ошибка"
 
-    def __ge__(self, other):
-        return self.number_of_floors >= other.number_of_floors if self.assay_other(other) else 'Ошибка'
+    def ge(self, other):
+        if isinstance(other, House):
+            return self.number_of_floors >= other.number_of_floors
+        elif isinstance(other, (int, float)):
+            return self.number_of_floors >= other
+        return "Ошибка"
 
-    def __ne__(self, other):
-        return self.number_of_floors != other.number_of_floors if self.assay_other(other) else 'Ошибка'
+    def ne(self, other):
+        if isinstance(other, House):
+            return self.number_of_floors != other.number_of_floors
+        elif isinstance(other, (int, float)):
+            return self.number_of_floors != other
+        return "Ошибка"
 
-    def __add__(self, value):
+    def add(self, value):
         if isinstance(value, int):
             self.number_of_floors += value  # Увеличиваем количество этажей
             return self
+        return "Ошибка при добавлении"
 
     def __radd__(self, value):
-        return self.__add__(value)  # перегрузка оператора для a + b
+        return self.add(value)  # перегрузка оператора для a + b
 
     def __iadd__(self, value):
-        return self.__add__(value)  # перегрузка оператора для a += b
+        return self.add(value)  # перегрузка оператора для a += b
 
 
 h1 = House('ЖК Эльбрус', 10)
@@ -61,7 +86,6 @@ print('Сравнение')
 print(h1 == h2)
 print(h2 == h3)
 print(h3 == h1)
-
 
 h1 = h1 + 10
 print(h1)
